@@ -1,0 +1,19 @@
+{
+  "name": "node-chat",
+  "description": "",
+  "main": "",
+  "authors": [
+    "xiangqingyi <1352493573@qq.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/xiangqingyi/Node_Chat",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/assets/plugins",
+    "test",
+    "tests"
+  ]
+}
