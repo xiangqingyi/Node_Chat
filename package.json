@@ -1,0 +1,40 @@
+{
+  "name": "node-chat",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "npm run local",
+    "local": "cross-env NODE_ENV=local nodemon ./app.js --ignore public/ --ignore views/",
+    "dev": "cross-env NODE_ENV=development nodemon ./app.js --ignore public/ --ignore views/",
+    "server": "cross-env NODE_ENV=production node app",
+    "test": "mocha"
+  },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "chai": "^4.2.0",
+    "compression": "^1.7.4",
+    "cookie-parser": "~1.4.3",
+    "cross-env": "^5.2.0",
+    "csrf": "^3.1.0",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "express-session": "^1.16.2",
+    "http-errors": "^1.6.3",
+    "jade": "~1.11.0",
+    "lodash": "^4.17.15",
+    "marked": "^0.7.0",
+    "mocha": "^6.2.0",
+    "moment": "^2.24.0",
+    "mongoose": "^5.6.6",
+    "morgan": "~1.9.0",
+    "nodemon": "^1.19.1",
+    "pngdefry": "^1.1.7",
+    "qs": "^6.7.0",
+    "session": "^0.1.0",
+    "strip": "^3.0.0",
+    "supertest": "^4.0.2",
+    "winston": "^2.4.2",
+    "winston-daily-rotate-file": "^1.4.6",
+    "xss": "^1.0.6"
+  }
+}
