@@ -13,6 +13,10 @@ let UserSchema = new Schema({
     },
     id: Number,
     salt: String,
+    status: {
+        type: Number,
+        default: 1
+    },
     hashed_password: String
 })
 
