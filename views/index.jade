@@ -1,5 +1,52 @@
-extends layout
-
-block content
-  h1= title
-  p Welcome to #{title}
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    title 群组聊天室
+    link(rel='icon', type='image/x-icon', href='/images/chat.ico')
+    link(rel='stylesheet', href='/style/index.css')
+    link(rel='stylesheet', href='/assets/plugins/font-awesome/css/font-awesome.min.css')
+  body
+    .all
+      .login 
+        .name
+           // <h2>请输入你的昵称</h2>
+           input#name(type='text', placeholder='请输入昵称...', autocomplete='off')
+        .password 
+           input#password(type='password',placeholder="请输入密码...", autocomplete='off')   
+        button#LoginBtn 确  定
+      .main
+        .header
+          img(src='/images/chatroom.png')
+          |           聊天室
+        #container
+          .conversation
+            ul#messages
+            form(action='')
+              .edit
+                input#color(type='color', value='#000000')
+                i#font.fa.fa-font(title='自定义字体颜色')
+                i#smile.fa.fa-smile-o(title='双击取消选择')
+                i#shake.fa.fa-bolt(title='单击页面震动')
+                input#file(type='file')
+                i#img.fa.fa-picture-o
+                .selectBox
+                  #smileDiv.smile
+                    p 经典表情
+                    ul.emoji
+              // autocomplete禁用自动完成功能
+              textarea#m(autofocus='')
+              button#sub.btn.rBtn 发送
+              button#clear.btn 关闭
+          .contacts
+            h1
+              | 在线人员(
+              span#num 0
+              | )
+            ul#users
+            p 当前无人在线哟~
+    // 加载全局io
+    script(src='/socket.io/socket.io.js')
+    script(src='/assets/plugins/jquery/dist/jquery.min.js')
+    script(src='/js/chat.js')
