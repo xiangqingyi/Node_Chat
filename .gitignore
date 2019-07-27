@@ -4,6 +4,7 @@
 .vscode
 client/build
 public/assets
+.DS_Store
 
 ### Node ###
 # Logs
