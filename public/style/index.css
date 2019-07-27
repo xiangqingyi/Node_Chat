@@ -67,7 +67,7 @@ body {
     vertical-align: middle;
 }
 #container {
-    height: 490px;
+    height: 471px;
     display: flex;
 }
 .conversation {
@@ -364,7 +364,7 @@ button.btn.rBtn {
 }
 .contacts h1 {
     font-size: 16px;
-    font-weight: 500px;
+    font-weight: 500;
     margin-bottom: 10px;
 }
 .contacts ul {
