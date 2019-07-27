@@ -6,7 +6,7 @@ let Schema = mongoose.Schema;
 
 // 用户模型
 let UserSchema = new Schema({
-    username: {
+    name: {
         type: String,
         required: '请输入用户名',
         unique: true
@@ -16,6 +16,10 @@ let UserSchema = new Schema({
     status: {
         type: Number,
         default: 1
+    },
+    online: {  // 默认是不在线的状态
+        type: Boolean,
+        default: false
     },
     hashed_password: String
 })
