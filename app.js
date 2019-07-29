@@ -109,6 +109,31 @@ io.on('connection', (socket) => {
 
     }
   });
+  // 注册用户
+  socket.on('register', async (user) => {
+    console.log('注册用户user')
+    if (!user.name || !user.password) {
+      core.logger.info('注册：用户名或者密码不能为空');
+      io.emit('parameterError');
+    } 
+    let regUser = await UserModel.findOne({name: user.name});
+    let length = await UserModel.countDocuments({});
+    if (regUser) {
+      // 用户名被占用
+      io.emit('nameerror');
+    } else {
+      let newuser = {
+        name: user.name,
+        password: user.password,
+        id: length + 1,
+        img: user.img
+      }
+      let _newuser = new UserModel(newuser);
+      await _newuser.save();
+      socket.emit('registerSuccess');
+    }
+    
+  })
   // 发送抖动窗口
   socket.on('shake', () => {
     socket.emit('shake', {

@@ -13,6 +13,7 @@ let UserSchema = new Schema({
     },
     id: Number,
     salt: String,
+    img: String,
     status: {
         type: Number,
         default: 1

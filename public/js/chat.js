@@ -8,6 +8,7 @@ $(function() {
         }
     })
     $('#LoginBtn').click(inputLogin);
+    $('#RegBtn').click(inputReg);
     socket.on('nouser', () => {
         alert('用户不存在');
         $('.name').val('');
@@ -34,11 +35,32 @@ $(function() {
         $('#name').val('');
     });
 
+    socket.on('nameerror', () => {
+        alert('该用户名被占用');
+        $('#name').val('');
+    })
+    // 触发注册事件 
+    function inputReg() {
+        // 暂时不能自己上传头像
+        console.log('注册用户');
+        let imgN = Math.floor(Math.random() * 4) + 1;
+        if ($('#name, #name').val().trim() !== '') {
+            socket.emit('register', {
+                name: $('#name').val(),
+                password: $('#password').val(),
+                img: '/images/user/user'+imgN+'.jpg'
+            })
+        }
+    }
+    socket.on('registerSuccess', () => {
+        alert('注册成功，请登录');
+        $('#name, #password').val('');
+    })
     //  触发登录事件
     function inputLogin() {
         // (暂时)随机分配头像
         let imgN = Math.floor(Math.random()*4)+1;
-        if ($('#name').val().trim() !== '') {
+        if ($('#name').val().trim() !== '' && $('#password').val().trim() !== '') {
             socket.emit('login', {
                 name: $('#name').val(),
                 password: $('#password').val(),
