@@ -325,7 +325,7 @@ textarea {
     border: none;
     font-family: '微软雅黑';
 }
-textarea:focus, .btn:focus, .name input:focus, .name button:focus {
+textarea:focus, .btn:focus, .name input:focus, .name:focus, .password input:focus, .name:focus {
     outline: none;
 }
  /*滚动条样式*/
@@ -365,6 +365,18 @@ button.btn.rBtn {
 .contacts {
     width: 210px;
     height: 100%;
+    /* padding: 6px; */
+}
+.contacts .onlineuser {
+    width: 210px;
+    height: 50%;
+    padding: 6px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #eee;
+}
+.contacts .groups {
+    width: 210px;
+    height: 50%;
     padding: 6px;
 }
 .contacts h1 {

@@ -41,12 +41,20 @@ html
               button#sub.btn.rBtn 发送
               button#clear.btn 关闭
           .contacts
-            h1
-              | 在线人员(
-              span#num 0
-              | )
-            ul#users
-            p 当前无人在线哟~
+            .onlineuser
+              h1
+                | 在线人员(
+                span#num 0
+                | )
+              ul#users
+              p 当前无人在线哟~
+            .groups
+              h1
+                | 选择群组(
+                span#groupnum 0
+                | )
+              ul#groups
+              p 当前无群组
     // 加载全局io
     script(src='/socket.io/socket.io.js')
     script(src='/assets/plugins/jquery/dist/jquery.min.js')
