@@ -45,10 +45,11 @@ body {
 .main {
     width: 705px;
     height: 556px;
-    margin: 7vh auto;
-    border: 2px #eee solid;
-    border-radius: 10px;
+    margin: 7vh auto; 
+    border: 2px #eee solid; 
+    border-radius: 10px;  
     box-shadow: 3px 5px 9px #ccc;
+    background-color: rgba(255, 255, 255, 1);
     position: relative;
     left: 0;
 }
@@ -76,22 +77,25 @@ body {
 }
 #messages {
     height: 346px;
-    padding: 20px 10px 0 10px;
+    padding: 20px 10px 0px 10px;
     overflow-y: auto;
+} 
+ /*滚动条样式*/
+#messages::-webkit-scrollbar {/*滚动条整体样式*/
+    width: 4px;     /*高宽分别对应横竖滚动条的尺寸*/
+    height: 4px;
 }
-/* 滚动条设置，小方块 */
-#messages::-webkit-scrollbar {  
+#messages::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
     border-radius: 5px;
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-    border-radius: 0;
-    background: rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    background: rgba(0,0,0,0.2);
 }
-#messages::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-    -webkit-box-shadow:inset 0 0 5px rgba(0, 0, 0, 0.2);
+#messages::-webkit-scrollbar-track {/*滚动条里面轨道*/
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
     border-radius: 0;
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0,0,0,0.1);
 }
 p.system {
     color: #888;
@@ -101,7 +105,7 @@ p.system {
 p.system span {
     background-color: #eee;
     border-radius: 9px;
-    padding: 1px 5px;
+    padding: 1px 5px;    
     margin-bottom: 7px;
     display: inline-block;
 }
@@ -130,8 +134,8 @@ p.system span {
     height: auto;
     border-radius: 5px;
 }
-#messagess li p span {
-    padding-top: 7px;
+#messages li p span {
+    padding-top: 7px;  
 }
 .left img {
     margin-right: 8px;
@@ -139,7 +143,7 @@ p.system span {
 .right img {
     margin-left: 8px;
 }
-.left img .left div {
+.left img, .left div {
     float: left;
 }
 .left span {
@@ -156,7 +160,7 @@ p.system span {
 }
 #messages li div>span {
     display: block;
-    color: #555;
+    color: #555; 
     padding-left: 2px;
 }
 #messages li div p {
@@ -165,8 +169,7 @@ p.system span {
     height: auto;
     padding: 10px;
     margin-top: 5px;
-    /* 文本自动换行 */
-    word-wrap: break-word;  
+    word-wrap: break-word;  /* 文本自动换行 */
     font-size: 15px;
     border-radius: 5px;
 }
@@ -175,7 +178,7 @@ p.system span {
 }
 .right p {
     background-color: #86bdf8;
-}
+}   
 form {
     height: 121px;
     border-top: 1px #ddd solid;
@@ -204,7 +207,7 @@ form {
     left: 0px;
     z-index: 3;
     background-color: #fff;
-}
+}  
 .shaking {
     animation: run 0.2s infinite;
 }
@@ -239,9 +242,9 @@ form {
     background: none;
     opacity: 0;
     position: relative;
-    z-index: 5;   
+    z-index: 5;
 }
-#color:focus{
+#color:focus {
     outline: none;
 }
 .edit #font {
@@ -253,7 +256,7 @@ form {
 .smile {
     width: 460px;
     height: auto;
-    border: 1px #eee solid;
+    border: 1px #eee solid; 
     box-shadow: 1px 1px 1px #ccc;
     padding-top: 5px;
     box-sizing: border-box;
@@ -268,7 +271,7 @@ form {
 }
 .emoji {
     width: 100%;
-    height: 210px;
+    height: 210px; 
     overflow-y: scroll;
     padding: 0 17px;
 }
@@ -292,22 +295,23 @@ form {
     width: 30px;
     height: 30px;
 }
-.emoji::-webkit-scrollbar {
-    width: 4px;
+
+.emoji::-webkit-scrollbar {/*滚动条整体样式*/
+    width: 4px;     /*高宽分别对应横竖滚动条的尺寸*/
     height: 4px;
 }
-.emoji::-webkit-scrollbar-thumb {
+.emoji::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
     border-radius: 5px;
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-    background: rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    background: rgba(0,0,0,0.2);
 }
-.emoji::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+.emoji::-webkit-scrollbar-track {/*滚动条里面轨道*/
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
     border-radius: 0;
-    background: rgba(0, 0, 0, 0.1)
-}
+    background: rgba(0,0,0,0.1);
+} 
 
 textarea {
     display: block;
@@ -319,26 +323,27 @@ textarea {
     font-size: 16px;
     background: none;
     border: none;
-    font-family: '微软雅黑'
+    font-family: '微软雅黑';
 }
-textarea:focus, .btn:focus, .name input:focus, .name:focus, .password input:focus, .name:focus {
+textarea:focus, .btn:focus, .name input:focus, .name button:focus {
     outline: none;
 }
-textarea::-webkit-scrollbar {
-    width: 4px;
+ /*滚动条样式*/
+textarea::-webkit-scrollbar {/*滚动条整体样式*/
+    width: 4px;     /*高宽分别对应横竖滚动条的尺寸*/
     height: 4px;
 }
-textarea::-webkit-scrollbar-thumb {
+textarea::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
     border-radius: 5px;
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-    background: rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    background: rgba(0,0,0,0.2);
 }
-textarea::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+textarea::-webkit-scrollbar-track {/*滚动条里面轨道*/
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
     border-radius: 0;
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0,0,0,0.1);
 }
 button.btn {
     width: 72px;
@@ -350,7 +355,7 @@ button.btn {
     border: none;
     color: #fff;
     cursor: pointer;
-}
+} 
 button.btn.rBtn {
     margin-right: 10px;
 }
