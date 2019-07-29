@@ -9,6 +9,9 @@ let GroupSchema = new Schema({
         required: '请输入群组名称',
         unique: true
     },
+    img: {
+        type: String
+    },
     id: Number,
     created: {
         type: Date,
