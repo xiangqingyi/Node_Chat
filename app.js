@@ -17,6 +17,7 @@ let _ = require('lodash');
 let session = require('express-session');
 let UserModel = require('./models/user');
 let MessageModel = require('./models/message');
+let GroupModel = require('./models/group');
 let http = require('http').Server(app);
 let core = require('./libs/core');
 // let req = require('request');
@@ -87,9 +88,14 @@ io.on('connection', (socket) => {
       core.logger.info('用户名或者密码不能为空');
       socket.emit('parameterError');
     } else if (loginUser.authenticate(user.password)) {
-      // 用户验证成功、
+      // 用户验证成功、(显示在线人数，和可选的群组)
       users.push(user.name);
-      usersInfo.push(user);
+      usersInfo.push({
+        ...user,
+        img: loginUser.img
+      });
+      // 会首先进入 你所在的groups中的第一个group
+      let groups = await GroupModel.find({});
       
       socket.emit('loginSuccess');
       socket.nickname = user.name;
@@ -99,6 +105,7 @@ io.on('connection', (socket) => {
         status: '进入'
       })
       io.emit('displayUser',usersInfo);
+      io.emit('disPlayGroups', groups);
       await UserModel.update({_id: loginUser._id}, {$set: {
         online: true
       }})

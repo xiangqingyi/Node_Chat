@@ -64,7 +64,7 @@ $(function() {
             socket.emit('login', {
                 name: $('#name').val(),
                 password: $('#password').val(),
-                img: '/images/user/user'+imgN+'.jpg'
+                // img: '/images/user/user'+imgN+'.jpg'
             })
         } else {
             return false;
@@ -89,6 +89,11 @@ $(function() {
     // 显示在线人员
     socket.on('displayUser', (usersInfo) => {
         displayUser(usersInfo);
+    })
+    // 显示可用群组
+    socket.on('disPlayGroups', (groups) => {
+        console.log(groups);
+        displayGroups(groups);
     })
     // 发送消息
     $('#sub').click(sendMsg);
@@ -162,14 +167,30 @@ $(function() {
             $('.main').removeClass('shaking');
         }, 500);
     }
-
+    // 显示groups
+    function displayGroups(groups) {
+        $('#groups').text('');
+        if (groups.length === 0) {
+            $('.groups p').show();
+        } else {
+            $('.groups p').hide();
+        }
+        $('#groupnum').text(groups.length);
+        for (let i = 0; i < groups.length; i++) {
+            let $html = `<li>
+               <img src="${groups[i].img}">
+               <span>${groups[i].name}</span>
+               </li>`
+               $('#groups').append($html);
+        }
+    }
     // 显示在线人员
     function displayUser(users) {
         $('#users').text(''); 
         if (!users.length) {
-            $('.contacts p').show();
+            $('.onlineuser p').show();
         } else {
-            $('.contacts p').hide();
+            $('.onlineuser p').hide();
         }
         $('#num').text(users.length);
         for (let i = 0; i < users.length; i++) {
