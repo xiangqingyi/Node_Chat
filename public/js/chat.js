@@ -102,7 +102,7 @@ $(function() {
         displayUser(usersInfo);
     })
     // 显示可用群组
-    socket.on('disPlayGroups', (groups) => {
+    socket.on('displayGroups', (groups) => {
         console.log(groups);
         displayGroups(groups);
     })

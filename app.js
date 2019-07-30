@@ -28,7 +28,13 @@ let server = app.listen(app.get('port'), function(req, res) {
   core.logger.info('mongodb url' + config.mongodb.uri);
   core.logger.info('redis url' + config.redis.host+ ":" + config.redis.port);
 })
-let io = require('socket.io')(server);
+let io = require('socket.io')(server, {
+  // serveClient: true,
+  // pingInterval: 10000,
+  // pingTimeout: 5000,
+  cookie: true
+});
+// io.of('/chat')
 
 marked.setOptions({
   renderer: new marked.Renderer(),
@@ -73,12 +79,15 @@ let users = [];
 let usersInfo = [];
 // 每个人连接用户都有专有的socket
 io.on('connection', async (socket) => {
+  console.log(socket.id);
+  console.log(users);
+  console.log(usersInfo);
   // 在线人员
   console.log('connect success');
   // 会首先进入 你所在的groups中的第一个group
   let groups = await GroupModel.find({});
   io.emit('displayUser', usersInfo);
-  io.emit('disPlayGroups', groups);
+  io.emit('displayGroups', groups);
   // 登录验证
   socket.on('login', async (user) => {
     let loginUser = await UserModel.findOne({name: user.name});
@@ -109,7 +118,7 @@ io.on('connection', async (socket) => {
         status: '进入'
       })
       io.emit('displayUser',usersInfo);
-      io.emit('disPlayGroups', groups);
+      io.emit('displayGroups', groups);
       await UserModel.update({_id: loginUser._id}, {$set: {
         online: true
       }})
@@ -203,6 +212,7 @@ io.on('connection', async (socket) => {
         }
       })
       io.emit('displayUser', usersInfo);   // 重新渲染在线人员
+      io.emit('displayGroups')     
       core.logger.info('a user left.')
     }
   })
