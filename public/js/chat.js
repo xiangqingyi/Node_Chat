@@ -224,7 +224,7 @@ $(function() {
         $('.selectBox').css('display', 'none');
     });
     $('#m').click(() => {
-        $('.selectBox').css('display', 'node');
+        $('.selectBox').css('display', 'none');
     });
     // 用户点击发送表情
     $('.emoji li img').click((event) => {
