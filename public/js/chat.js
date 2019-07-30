@@ -77,14 +77,14 @@ $(function() {
         ${user.name} ${user.status}了聊天室`);
         // 滑动条总是在最底部
         $('#messages').scrollTop($('#messages')[0].scrollHeight);
-        $('#messages').append(`<p class='system'><span>${data}</span><br /><span>${user.name}发送了一个窗口抖动</span></p>`);
-        shake(); 
-        $('#messages').scrollTop($('#messages')[0].scrollHeight);
     })
 
     // 抖动窗口事件
     socket.on('shake', (user) => {
         let data = new Date().toTimeString().substr(0, 8);
+        $('#messages').append(`<p class="system"><span>${data}</span><br /><span>${user.name}发送了窗口抖动</span></p>`);
+        shake();
+        $('#messages').scrollTop($('#messages')[0].scrollHeight);
     })
     // 显示在线人员
     socket.on('displayUser', (usersInfo) => {
