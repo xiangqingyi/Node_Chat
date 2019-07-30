@@ -90,7 +90,10 @@ io.on('connection', async (socket) => {
     } else if (!user.name || !user.password) {
       core.logger.info('用户名或者密码不能为空');
       socket.emit('parameterError');
-    } else if (loginUser.authenticate(user.password)) {
+    } else if (!loginUser.authenticate(user.password)) {
+      // 密码验证失败
+      socket.emit('authenticationError');
+    } else {
       // 用户验证成功、(显示在线人数，和可选的群组)
       users.push(user.name);
       usersInfo.push({
@@ -111,10 +114,6 @@ io.on('connection', async (socket) => {
         online: true
       }})
       core.logger.info(users.length + 'user connnect.');
-    } else {
-      // 验证失败
-      io.emit('authenticationError');
-
     }
   });
   // 注册用户
@@ -153,6 +152,7 @@ io.on('connection', async (socket) => {
   })
   // 发送消息事件
   socket.on('sendMsg', async (data) => {
+    console.log(data);
     let img = '';
     for (let i = 0; i < usersInfo.length; i++) {
       if (usersInfo[i].name == socket.nickname) {
@@ -179,6 +179,7 @@ io.on('connection', async (socket) => {
     let newMsg = {
       author: _user._id,
       content: data.msg,
+      type: data.type,
       // group: ........
     }
     let _newMsg = new MessageModel(newMsg);

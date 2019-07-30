@@ -17,6 +17,7 @@ $(function() {
     })
     socket.on('authenticationError', () => {
         alert('登录验证失败');
+        // $('#name, #password').val('');
         console.log('密码验证失败');
     })
     socket.on('parameterError', () => {
@@ -42,6 +43,11 @@ $(function() {
     // 触发注册事件 
     function inputReg() {
         // 暂时不能自己上传头像
+        if ($('#name').val === '' || $('#password').val() === '') {
+            alert('用户名或密码不能为空!');
+            console.log('用户名或者密码不能为空');  
+            return;
+        }
         console.log('注册用户');
         let imgN = Math.floor(Math.random() * 4) + 1;
         if ($('#name, #name').val().trim() !== '') {
@@ -59,6 +65,11 @@ $(function() {
     //  触发登录事件
     function inputLogin() {
         // (暂时)随机分配头像
+        if ($('#name').val === '' || $('#password').val() === '') {
+            alert('用户名或密码不能为空!');
+            console.log('用户名或者密码不能为空');  
+            return;
+        }
         let imgN = Math.floor(Math.random()*4)+1;
         if ($('#name').val().trim() !== '' && $('#password').val().trim() !== '') {
             socket.emit('login', {
@@ -104,21 +115,22 @@ $(function() {
     })
     // 接收消息
     socket.on('receiveMsg', (obj) => {
+        console.log(obj);
+        console.log(obj.msg)
         // 发送为图片
-        if (obj.type == 'img') {
+        if(obj.type == 'img') {
             $('#messages').append(`
               <li class='${obj.side}'>
-                 <img src="${obj.img}">
-                 <div>
-                   <span>${obj.name}</span>
-                   <p style="padding: 0">${obj.msg}</p>
-                 </div>
+                <img src="${obj.img}">
+                <div>
+                  <span>${obj.name}</span>
+                  <p style="padding: 0;">${obj.msg}</p>
+                </div>
               </li>
-            `);
+            `); 
             $('#messages').scrollTop($('#messages')[0].scrollHeight);
             return;
-        }
-
+          }
         // 提取文字中的表情加以渲染
         let msg = obj.msg;
         let content = '';
@@ -242,24 +254,23 @@ $(function() {
 
     // 用户发送图片
     $('#file').change(function() {
-        let file = this.files[0];
-        let reader = new FileReader();
-
-        reader.onerror = function() {
-            console.log('读取文件失败，请重试！');
-            return false;
-        }
-
+        var file = this.files[0];  // 上传单张图片
+        var reader = new FileReader();
+  
+        //文件读取出错的时候触发
+        reader.onerror = function(){
+            console.log('读取文件失败，请重试！'); 
+        };
+        // 读取成功后
         reader.onload = function() {
-            let src = reader.result;
-            let img = '<img class="sendImg src="'+src+'">';
-            socket.emit('sendMsg', {
-                msg: img,
-                color: color,
-                type: 'img'
-            })
-        }
-        reader.readAsDataURL(file);
-    
-    })
+          var src = reader.result;  // 读取结果
+          var img = '<img class="sendImg" src="'+src+'">';
+          socket.emit('sendMsg', {  // 发送
+            msg: img,
+            color: color,
+            type: 'img'
+          }); 
+        };
+        reader.readAsDataURL(file); // 读取为64位
+      });
 })
