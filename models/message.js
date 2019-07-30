@@ -16,6 +16,9 @@ let MessageSchema = new Schema({
     content: {
         type: String
     },
+    type: {
+        type: String,
+    },
     group: {
         type: Schema.ObjectId,
         ref: 'Group'
