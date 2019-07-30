@@ -72,10 +72,13 @@ app.set('config', config);
 let users = [];
 let usersInfo = [];
 // 每个人连接用户都有专有的socket
-io.on('connection', (socket) => {
+io.on('connection', async (socket) => {
   // 在线人员
   console.log('connect success');
+  // 会首先进入 你所在的groups中的第一个group
+  let groups = await GroupModel.find({});
   io.emit('displayUser', usersInfo);
+  io.emit('disPlayGroups', groups);
   // 登录验证
   socket.on('login', async (user) => {
     let loginUser = await UserModel.findOne({name: user.name});
@@ -94,8 +97,6 @@ io.on('connection', (socket) => {
         ...user,
         img: loginUser.img
       });
-      // 会首先进入 你所在的groups中的第一个group
-      let groups = await GroupModel.find({});
       
       socket.emit('loginSuccess');
       socket.nickname = user.name;
