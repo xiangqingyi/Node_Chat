@@ -159,7 +159,7 @@ $(function() {
     let color = '#000000';
     function sendMsg() {
         if ($('#m').val() == '') {
-            alert('请输入内容！');
+            // alert('请输入内容！');
             return false;
         }
         color = $('#color').val();
@@ -242,7 +242,10 @@ $(function() {
     $('.emoji li img').click((event) => {
         event = event || window.event;
         let src = event.target.src;
-        let emoji = src.replace(/\D*/g, '').substr(6, 8);
+        console.log(src);
+        // let emoji = src.replace(/\D*/g, '').substr(6, 8);
+        let length = src.replace(/\D*/g, '').length;
+        let emoji = src.replace(/\D*/g, '').substr(length-2,length);
         let old = $('#m').val();
         $('#m').val(old+'[emoji'+emoji+']');
         $('.selectBox').css('display', 'none');
