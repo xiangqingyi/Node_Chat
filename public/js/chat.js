@@ -33,7 +33,7 @@ $(function() {
     })
     socket.on('loginError', () => {
         alert('该用户已登录，请勿重复登录');
-        $('#name').val('');
+        $('#name, #password').val('');
     });
 
     socket.on('nameerror', () => {
@@ -189,7 +189,7 @@ $(function() {
         }
         $('#groupnum').text(groups.length);
         for (let i = 0; i < groups.length; i++) {
-            let $html = `<li>
+            let $html = `<li id=${groups[i]._id} class="groupsign">
                <img src="${groups[i].img}">
                <span>${groups[i].name}</span>
                </li>`
@@ -273,4 +273,24 @@ $(function() {
         };
         reader.readAsDataURL(file); // 读取为64位
       });
+      // 事件委托    
+      $(document).on('click', '.groupsign', function() {
+        let id = $(this).attr("id");
+        console.log(id);
+        socket.emit('entergroup', {
+            groupid: id,
+        })
+        // 进入群组显示群组的详细信息
+        socket.on('showgroup', (detail) => {
+            console.log(detail);
+            $('#grouptitle').text(detail.groupDetail.name)
+            $('#grouptitle').css('padding-left','33%')
+        })
+        socket.on('grouperror', () => {
+            alert('进去群组失败！');
+        })
+        socket.on('nogroup', () => {
+            alert('该聊天室不存在')
+        })
+    })
 })

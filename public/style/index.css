@@ -200,6 +200,9 @@ form {
 .edit i:hover {
     background-color: #e2e2e2 !important;
 }
+.groupsign:hover {
+    background-color: #e2e2e2 !important;
+}
 .edit .selectBox {
     display: none;
     position: absolute;

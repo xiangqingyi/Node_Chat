@@ -195,8 +195,28 @@ io.on('connection', async (socket) => {
     _newMsg.save();
     core.logger.info('发送消息成功');
   });
+  //  进入群组
+  socket.on('entergroup', async (group) => {
+    console.log(group);
+    try {
+       let _group = await GroupModel.findById(group.groupid).populate('members',['name']);
+       if (_group) {
+          socket.emit('showgroup', {
+             groupDetail: _group
+          })
+       } else {
+         core.logger.info('该群组不存在');
+         socket.emit('nogroup');
+       }
+    } catch (error) {
+      core.logger.error(error);
+      // 进去群组出错
+      socket.emit('grouperror');
+    }
+  })
   // 断开连接时
   socket.on('disconnect', async () => {
+    console.log('离开的操作')
     let index = users.indexOf(socket.nickname);
     if (index > -1) {
       users.splice(index, 1); // 删除用户信息
