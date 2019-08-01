@@ -130,6 +130,7 @@ io.on('connection', async (socket) => {
     try {
       let messages = await MessageModel.find({group: group.groupid}).populate('author').sort({"created": 1}).exec();
       socket.emit('showmessages', {
+        nickname: socket.nickname,
         data: messages
       })
     } catch (error) {
@@ -210,12 +211,13 @@ io.on('connection', async (socket) => {
   });
   //  进入群组
   socket.on('entergroup', async (group) => {
-    console.log(group);
+    console.log(socket.nickname)
     try {
        let _group = await GroupModel.findById(group.groupid).populate('members',['name']);
        if (_group) {
           socket.emit('showgroup', {
-             groupDetail: _group
+             groupDetail: _group,
+             nickname: socket.nickname
           })
        } else {
          core.logger.info('该群组不存在');

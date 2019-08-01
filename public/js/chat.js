@@ -298,9 +298,10 @@ $(function() {
             console.log(data.data);
             let result = data.data;
             for (let i = 0; i < result.length; i++) {
+                let side = (data.nickname === result[i].author.name) ? 'right' : 'left';
                 if (result[i].type === 'img') {
                     $('#messages').append(`
-                       <li class="right">
+                       <li class="${side}">
                           <img src="${result[i].author.img}">
                           <div>
                              <span>${result[i].author.name}</span>
@@ -320,7 +321,7 @@ $(function() {
                     }
                     content += '<span>'+msg+'</span>';
                     $('#messages').append(`
-                        <li class="left">
+                        <li class="${side}">
                            <img src="${result[i].author.img}">
                            <div>
                               <span>${result[i].author.name}</span>
