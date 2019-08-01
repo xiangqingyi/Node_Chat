@@ -125,6 +125,19 @@ io.on('connection', async (socket) => {
       core.logger.info(users.length + 'user connnect.');
     }
   });
+  socket.on('getmessages', async (group) => {
+    console.log(group);
+    try {
+      let messages = await MessageModel.find({group: group.groupid}).populate('author').sort({"created": 1}).exec();
+      socket.emit('showmessages', {
+        data: messages
+      })
+    } catch (error) {
+      core.logger.error(error);
+      // 获取messages失败
+      socket.emit('messageserror');
+    }
+  })
   // 注册用户
   socket.on('register', async (user) => {
     console.log('注册用户user')

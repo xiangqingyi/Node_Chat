@@ -30,6 +30,9 @@ $(function() {
         $('.login').hide();
         $('.name').hide();
         $('.password').hide();
+        // 登录成功之后获取对应group的聊天记录
+        
+
     })
     socket.on('loginError', () => {
         alert('该用户已登录，请勿重复登录');
@@ -64,18 +67,15 @@ $(function() {
     })
     //  触发登录事件
     function inputLogin() {
-        // (暂时)随机分配头像
         if ($('#name').val === '' || $('#password').val() === '') {
             alert('用户名或密码不能为空!');
             console.log('用户名或者密码不能为空');  
             return;
         }
-        let imgN = Math.floor(Math.random()*4)+1;
         if ($('#name').val().trim() !== '' && $('#password').val().trim() !== '') {
             socket.emit('login', {
                 name: $('#name').val(),
                 password: $('#password').val(),
-                // img: '/images/user/user'+imgN+'.jpg'
             })
         } else {
             return false;
@@ -287,7 +287,51 @@ $(function() {
         socket.on('showgroup', (detail) => {
             console.log(detail);
             $('#grouptitle').text(detail.groupDetail.name)
-            $('#grouptitle').css('padding-left','33%')
+            $('#grouptitle').css('padding-left','33%');
+            // 获取该聊天室的聊天记录
+            socket.emit('getmessages', {
+                groupid: detail.groupDetail._id
+            })
+        })
+        socket.on('showmessages', (data) => {
+            // 暂时不要时间戳
+            console.log(data.data);
+            let result = data.data;
+            for (let i = 0; i < result.length; i++) {
+                if (result[i].type === 'img') {
+                    $('#messages').append(`
+                       <li class="right">
+                          <img src="${result[i].author.img}">
+                          <div>
+                             <span>${result[i].author.name}</span>
+                             <p style="padding: 0;">${result[i].content}</p>
+                          </div>
+                       </li>
+                    `)
+                } else if (result[i].type === 'text') {
+                    let content = '';
+                    let msg = result[i].content;
+                    while(msg.indexOf('[') > -1 && msg.indexOf(']') > -1) {
+                        let start = msg.indexOf('[');
+                        let end = msg.indexOf(']');
+                        content += '<span>'+msg.substr(0, start)+'</span>';
+                        content += '<img src="/images/emoji/emoji%20('+msg.substr(start+6, end-start-6)+').png">';
+                        msg = msg.substr(end+1, msg.length);
+                    }
+                    content += '<span>'+msg+'</span>';
+                    $('#messages').append(`
+                        <li class="left">
+                           <img src="${result[i].author.img}">
+                           <div>
+                              <span>${result[i].author.name}</span>
+                              <p style="color: #000000;">${content}</p>
+                           </div>
+                        </li>
+                    `)
+                }
+            }
+            $('#messages').scrollTop($('#messages')[0].scrollHeight);
+            
         })
         socket.on('grouperror', () => {
             alert('进去群组失败！');
