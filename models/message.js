@@ -22,6 +22,9 @@ let MessageSchema = new Schema({
     group: {
         type: Schema.ObjectId,
         ref: 'Group'
+    },
+    groupid: {
+        type: Number
     }
 });
 

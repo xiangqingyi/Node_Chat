@@ -112,6 +112,8 @@ io.on('connection', async (socket) => {
       
       socket.emit('loginSuccess');
       socket.nickname = user.name;
+      let group = await GroupModel.findOne({id: 1}).exec();
+      socket.groupid = group._id;
       // 只能进默认的群组（暂时），应该是可以选择群组进去
       io.emit('system', {
         name: user.name,
@@ -119,7 +121,7 @@ io.on('connection', async (socket) => {
       })
       io.emit('displayUser',usersInfo);
       io.emit('displayGroups', groups);
-      await UserModel.update({_id: loginUser._id}, {$set: {
+      await UserModel.updateOne({_id: loginUser._id}, {$set: {
         online: true
       }})
       core.logger.info(users.length + 'user connnect.');
@@ -199,11 +201,13 @@ io.on('connection', async (socket) => {
       side: 'right'
     })
     let _user = await UserModel.findOne({name: socket.nickname});
+    let group = await GroupModel.findById(socket.groupid);
     let newMsg = {
       author: _user._id,
       content: data.msg,
       type: data.type,
-      // group: ........
+      group: group._id,
+      groupid: group.id
     }
     let _newMsg = new MessageModel(newMsg);
     _newMsg.save();
@@ -215,6 +219,7 @@ io.on('connection', async (socket) => {
     try {
        let _group = await GroupModel.findById(group.groupid).populate('members',['name']);
        if (_group) {
+          socket.groupid = _group._id;
           socket.emit('showgroup', {
              groupDetail: _group,
              nickname: socket.nickname
@@ -241,7 +246,7 @@ io.on('connection', async (socket) => {
         name: socket.nickname,
         status: '离开'
       });
-      await UserModel.update({name: socket.nickname}, {
+      await UserModel.updateOne({name: socket.nickname}, {
         $set: {
           online: false
         }
