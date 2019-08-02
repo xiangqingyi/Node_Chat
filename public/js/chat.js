@@ -83,9 +83,10 @@ $(function() {
     }
     // 系统提示消息
     socket.on('system', (user) => {
-        let data = new Date().toTimeString().substr(0, 8);
+        // let data = new Date().toTimeString().substr(0, 8);
+        let data = moment().format('YYYY-MM-DD HH:MM:SS')
         $('#messages').append(`<p class='system'><span>${data}</span><br /><span>
-        ${user.name} ${user.status}了聊天室`);
+        ${user.name} ${user.status}了聊天室</span></p>`);
         // 滑动条总是在最底部
         $('#messages').scrollTop($('#messages')[0].scrollHeight);
     })
@@ -279,6 +280,10 @@ $(function() {
       // 事件委托    
       $(document).on('click', '.groupsign', function() {
         let id = $(this).attr("id");
+        $('#messages .system,.right,left').remove();
+        // $('#messages .system').remove();
+        // $('#messages .right').remove();
+        // $('#messages .left').remove();
         console.log(id);
         socket.emit('entergroup', {
             groupid: id,
@@ -294,9 +299,14 @@ $(function() {
             })
         })
         socket.on('showmessages', (data) => {
-            // 暂时不要时间戳
+            // 显示最开始的时间戳
             console.log(data.data);
+            $('#messages .system,.right,left').remove();
             let result = data.data;
+            let datetime = moment(result[0].created).format('YYYY-MM-DD HH:MM:SS')
+            $('#messages').append(`
+              <p class="system"><span>历史消息</span><br /><span>${datetime}</span><br /></p>
+            `)
             for (let i = 0; i < result.length; i++) {
                 let side = (data.nickname === result[i].author.name) ? 'right' : 'left';
                 if (result[i].type === 'img') {
