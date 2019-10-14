@@ -46,7 +46,8 @@ marked.setOptions({
 })
 app.use(compression());
 
-// 连接数据库
+
+// 连接数据库的配置
 mongoose.Promise = global.Promise;
 mongoose.connect(config.mongodb.uri, { useNewUrlParser: true }).then(db => {
   console.log('mongodb连接成功')
